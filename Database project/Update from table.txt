@@ -1,0 +1,24 @@
+alter table project add (project_start date,project_end date);
+update project set  project_start='22-Jan-21'  where p_name='Construction';
+update project set  project_end='1-Jan-24'  where p_name='Construction';
+update project set  project_start='12-Jun-21'  where p_name='Management';
+update project set  project_end='12-Jun-24'  where p_name='Management';
+update project set  project_start='3-Jan-22'  where p_name='Research';
+update project set  project_end='28-Jan-26'  where p_name='Research';
+update project set  project_start='1-Jan-21'  where p_name='Manufacturing';
+update project set  project_end='12-Jun-24'  where p_name='Manufacturing';
+update project set  project_start='1-Jan-21'  where p_name='Science';
+update project set  project_end='1-Sep-23'  where p_name='Science';
+update project set  project_start='1-Oct-21'  where p_name='Education';
+update project set  project_end='1-Oct-26'  where p_name='Education';
+update project set  project_start='1-Nov-21'  where p_name='Architecture';
+update project set  project_end='30-Nov-24'  where p_name='Architecture';
+update project set  project_start='22-Jun-22'  where p_name='Health';
+update project set  project_end='22-Dec-26'  where p_name='Health';
+update project set  project_start='15-Jan-21'  where p_name='Sales';
+update project set  project_end='15-Jan-28'  where p_name='Sales';
+update project set  project_start='1-Jan-21'  where p_name='Breeze';
+update project set  project_end='1-Jan-31'  where p_name='Breeze';
+select *from project;
+commit;
+

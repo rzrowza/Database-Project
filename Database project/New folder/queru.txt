@@ -1,0 +1,14 @@
+set serveroutput on
+create or replace procedure get_salary (
+empid salary.e_id%type) 
+is sal salary.amount%type;
+begin
+select amount into sal from salary where e_id=empid;
+dbms_output.put_line('sal:'||sal);
+end;
+/
+
+begin
+get_salary(1807039);
+end;
+/

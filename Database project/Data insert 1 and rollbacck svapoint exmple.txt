@@ -1,0 +1,33 @@
+delete from item;
+delete from workfor;
+delete from SALARY;
+delete from employee;
+delete from department;
+delete from project;
+delete from company;
+
+
+----insert into company----
+insert into company values(1,'Groupon','Dhaka','01726964377');
+insert into company values(2,'Influitive','Khulna','01761072816');
+insert into company values(3,'Technologent','Dinajpur','01716415002');
+insert into company values(4,'Medicine','Dhaka','01726964345');
+commit;
+delete from company;
+select *from company;
+rollback;
+select *from company;
+insert into company values(5,'Tourish','Chittagong','01761072878');
+savepoint cm5;
+insert into company values(6,'TeckTack','Dinajpur','01716414567');
+savepoint cm6;
+rollback to cm5;
+select *from company;
+insert into company values(6,'TeckTack','Dinajpur','01716414567');
+insert into company values(7,'GameEight','Dhaka','01726964900');
+insert into company values(8,'DriveMo','Khustia','01761072678');
+insert into company values(9,'Composy','Dinajpur','01726415002');
+insert into company values(10,'Security','Dhaka','01726964945');
+
+select *from company;
+ select *from company order by company_id;

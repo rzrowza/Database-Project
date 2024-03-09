@@ -1,0 +1,14 @@
+ set serveroutput on
+declare
+ cursor show_em is select id,gender,date_of_birth,e_name,d_name from employee;
+employee_data show_em%rowtype;
+begin
+open show_em;
+loop
+ fetch show_em into employee_data;
+exit when show_em%notfound;
+ dbms_output.put_line('id:'||employee_data.id||' '||'gender: '||employee_data.gender||' '||employee_data.date_of_birth||' '||employee_data.e_name||' '||employee_data.d_name);
+end loop;
+close show_em;
+ end;
+ /

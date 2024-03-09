@@ -1,0 +1,16 @@
+delete from company where company_id=1;
+select *from company;
+select *from project;
+select *from department;
+select *from employee;
+select *from salary;
+select *from workfor;
+select *from item;
+rollback;
+select *from company;
+select *from project;
+select *from department;
+select *from employee;
+select *from salary;
+select *from workfor;
+select *from item;

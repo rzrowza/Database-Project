@@ -1,0 +1,80 @@
+DROP TABLE item;
+DROP TABLE workfor;
+DROP TABLE salary;
+drop table employee;
+DROP TABLE department;
+drop table project;
+DROP TABLE company;
+create table COMPANY(
+		company_id integer primary key,
+		company_name varchar(20),
+		location varchar(20),
+		contact_no varchar(11) not null ,
+		unique(contact_no)
+);
+create table PROJECT(
+		p_name varchar(20) primary key,
+		budget number(20,2),	
+		p_no integer not null		
+);
+create table DEPARTMENT(
+		d_name varchar(20)  primary key,
+		d_no integer not null ,
+		c_id number(10) not null
+);
+alter table department  add constraint fk_cid foreign key(c_id) references company(company_id) on delete cascade;
+create table EMPLOYEE(
+		e_name varchar(20) ,
+		id integer primary key,
+		gender varchar(10),
+		date_of_birth date,
+		d_name varchar(20),
+		foreign key(d_name) references department(d_name) on delete cascade
+);
+create table SALARY(
+		e_id integer primary key,
+		amount number(12,2),
+		s_date date,
+		s_month varchar(10),
+		foreign key(e_id) references employee (id) on delete  cascade
+);
+create table ITEM(
+		i_id integer primary key,
+		i_name varchar(20),
+		i_type varchar(20),
+		p_name varchar(20) ,
+		foreign key (p_name) references project (p_name) on delete cascade
+);
+create table WORKFOR(
+		E_DATE date,
+		job varchar(40),
+		id integer not null check (id>0),
+		p_name varchar(20),
+		primary key (id,p_name),
+		foreign key (id) references employee (id) on delete cascade,
+		foreign key(p_name) references project(p_name) on delete cascade
+);
+describe company;
+describe item;
+describe salary;
+describe employee;
+describe workfor;
+describe project;
+describe department;
+alter table department modify d_name varchar(30);
+alter table department add constraint deptunique unique(d_no);
+---------trigger on salary----
+CREATE OR REPLACE TRIGGER check_salary BEFORE INSERT OR UPDATE ON 
+salary
+FOR EACH ROW
+DECLARE
+ c_min constant number(8,2) := 1000.0;
+ c_max constant number(8,2) := 300000.0;
+BEGIN
+ IF :new.amount> c_max OR :new.amount< c_min THEN
+ RAISE_APPLICATION_ERROR(-20000,'New salary is too small or large');
+END IF;
+END;
+/
+
+

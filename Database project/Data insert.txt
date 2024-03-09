@@ -1,0 +1,82 @@
+----insert into project----
+insert into project values('Construction',120000000.00,1);
+insert into project values('Management',390000000.00,2);
+insert into project values('Research',4300000000.00,3);
+insert into project values('Manufacturing',4300000000.00,4);
+insert into project values('Science',4300000000.00,5);
+insert into project values('Education',4300000000.00,6);
+insert into project values('Architecture',390000000.00,7);
+insert into project values('Health',4300000000.00,8);
+insert into project values('Sales',4300000000.00,9);
+insert into project values('Breeze',4300000000.00,10);
+-----insert into department---
+insert into department values('General management',03,1);
+insert into department values('Marketing department',07,1);
+insert into department values('Sales department',17,1);
+insert into department values('Engineering',04,1);
+insert into department values('Production',06,1);
+insert into department values('Warehouse management',14,1);
+insert into department values('Information Technology',05,1);
+insert into department values('Legal',01,1);
+insert into department values('Risk management',09,1);
+insert into department values('Purchasing',11,1);
+---insert into employee---
+insert into employee values('Mahin Ahmed',1807001,'Male','01-APR-99','General management');
+insert into employee values('Iftee Reza',1807002,'Male','01-DEC-99','General management');
+insert into employee values('Asfia Oishy',1807007,'Female','01-APR-99','General management');
+insert into employee values('Nishat Lira',1807029,'Female','01-APR-99','Warehouse management');
+insert into employee values('Rowza Zannat',1807039,'Female','01-DEC-99','Sales department');
+insert into employee values('Mifra Akhter',1807057,'Female','01-APR-99','Risk management');
+insert into employee values('Zahid Khan',1807026,'Male','01-APR-99','Purchasing');
+insert into employee values('Sahid Hasan',1807013,'Male','01-DEC-99','Legal');
+insert into employee values('Farhan Akhter',1807117,'Male','01-APR-99','Production');
+insert into employee values('Rakib Ahmed',1807025,'Male','01-APR-99','General management');
+----insert into salary-----
+ insert into salary values(1807039,500,'12-Jan-21','January');
+insert into salary values(1807001,100000.00,'01-JAN-22','January');
+insert into salary values(1807002,300000.00,'01-JAN-22','January');
+insert into salary values(1807007,70000.00,'01-JAN-22','January');
+insert into salary values(1807029,100000.00,'01-JAN-22','January');
+insert into salary values(1807039,300000.00,'01-JAN-22','January');
+insert into salary values(1807057,70000.00,'01-JAN-22','January');
+insert into salary values(1807026,100000.00,'01-JAN-22','January');
+insert into salary values(1807013,300000.00,'01-JAN-22','January');
+insert into salary values(1807117,70000.00,'01-JAN-22','January');
+insert into salary values(1807025,100000.00,'01-JAN-22','January');
+-----insert into item----
+insert into item values(1,'Paper','Note','Breeze');
+insert into item values(2,'Pen','Note','Breeze');
+insert into item values(3,'Computer','Note','Breeze');
+insert into item values(4,'Steel','Raw Materials','Manufacturing');
+insert into item values(5,'Plastic','Raw Materials','Breeze');
+insert into item values(6,'Natural gas','Raw Materials','Breeze');
+insert into item values(7,'Coal','Raw Materials','Breeze');
+insert into item values(8,'Minerals','Raw Materials','Breeze');
+insert into item values(9,'Ceramics','Raw Materials','Breeze');
+insert into item values(10,'Note','Raw Materials','Breeze');
+---insert into worker---
+insert into workfor values('01-Jan-22','Cheif Executive officer',1807001,'Breeze');
+insert into workfor values('01-Jan-22','Director',1807002,'Breeze');
+insert into workfor values('01-Jan-22','President',1807007,'Breeze');
+insert into workfor values('01-Jan-22','Cheif Executive officer',1807029,'Construction');
+insert into workfor values('01-Jan-22','Director',1807039,'Construction');
+insert into workfor values('01-Jan-22','President',1807057,'Construction');
+insert into workfor values('01-Jan-22','Cheif Executive officer',1807001,'Manufacturing');
+insert into workfor values('01-Jan-22','Director',1807002,'Manufacturing');
+insert into workfor values('01-Jan-22','President',1807007,'Manufacturing');
+insert into workfor values('01-Jan-22','President',1807117,'Sales');
+set lines 256;
+set tab off;
+set trimout on;
+-------check the tables-----
+select *from company;
+select *from project;
+select *from department;
+select *from employee;
+select *from salary;
+select *from workfor;
+select *from item;
+
+
+
+

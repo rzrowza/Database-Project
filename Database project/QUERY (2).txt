@@ -1,0 +1,222 @@
+drop view Projects;
+drop view maximum_salary;
+
+-----Maximum salary----
+ create view maximum_salary as select max(amount)
+ as max_salary from salary;
+select *from maximum_salary;
+
+-----designation of max salary holder-----
+ select workfor.job from
+ workfor join salary
+ on workfor.id=salary.e_id
+ where salary.amount in (select max(amount) from salary);
+
+-----material available for a project-----
+ select i_name,i_type from item 
+where p_name='Breeze';
+
+----distinct project in item-----
+ create view Projects as select distinct(p_name) from item;
+ select *from Projects;
+
+------2nd most salary-----
+select max(amount) from salary
+ where amount in (
+select amount from salary minus
+(select max(amount) from salary)
+ );
+
+-----2nd most salary employee name----
+select e.e_name from employee e join salary s 
+on e.id=s.e_id 
+where s.amount in (select max(amount) from salary
+where amount in (select amount from salary minus(select max(amount)
+from salary)));
+
+-----2nd most salary employee works from when------
+select employee.e_name ,workfor.e_date as e_workfor
+from employee join workfor on 
+employee.id=workfor.id where employee.id 
+in( select e.id from employee e join salary s 
+on e.id=s.e_id where s.amount in 
+(select max(amount) from salary 
+where amount in (select amount from salary 
+minus(select max(amount) from salary)
+)));
+
+---find the department name both in department and employee-----
+select d_name from department intersect 
+select d_name from employee;
+
+----find employee who get salary at the current month---
+select e_name,d_name from employee where id in(
+select e_id from salary where s_month='January');
+
+-----find all elemnts of company join department where company_name=Groupon-------
+select department.d_name,company.company_name 
+from company join department
+ on 
+company.company_id=department.c_id 
+where company.company_name='Groupon';
+
+----------salary between 60000 and 90000---
+ select e_name as Name ,id as Identity from employee 
+where id in
+ (select e_id from salary where amount between 60000 and 90000);
+
+---find the company name whoose contact number is like ***5002***----
+ select company_name,contact_no from company where contact_no like '%5002%';
+
+------and count the number---
+ select count(company_name) from company where contact_no like '%5002%';
+
+------order by salary----
+select e_id,amount from salary order by amount;
+
+-----group by salary----
+ select amount,count(e_id) from salary
+ group by amount 
+having amount>=100000
+order by amount;
+
+-------salary of 1807039 union saalry amount>=80000----
+select e_id,amount from salary where e_id=1807039 
+union select e_id,amount from salary where amount>=80000;
+-----------outer join---------
+select *from company e left outer  join department w on e.company_id=w.c_id;
+select *from company e right outer  join department w on e.company_id=w.c_id;
+select *from company e full outer  join department w on e.company_id=w.c_id;
+
+-------find name,id and employee date--------
+select id,e_name,e_date from employee natural join workfor;
+
+select e_name,e_date from employee join workfor using (id);
+
+------find rank who work in sales----
+set serveroutput on
+declare
+rank workfor.job%type;
+project workfor.p_name%type:='Sales';
+begin
+select job into rank
+from workfor
+where p_name=project;
+dbms_output.put_line('rank: '||rank);
+end;
+/
+-----------------
+ set serveroutput on
+declare
+rank workfor.job%type;
+s_salary salary.amount%type;
+begin
+select max(amount) into s_salary from salary,workfor ;
+dbms_output.put_Line(' '||s_salary);
+end;
+  /
+-------showing 5 rows from employee--
+ set serveroutput on
+declare
+ cursor show_em is select id,gender,date_of_birth,e_name,d_name from employee;
+employee_data show_em%rowtype;
+begin
+open show_em;
+loop
+ fetch show_em into employee_data;
+exit when show_em%rowcount>5;
+ dbms_output.put_line('id:'||employee_data.id||' '||'gender: '||employee_data.gender||' '||employee_data.date_of_birth||' '||employee_data.e_name||' '||employee_data.d_name);
+end loop;
+close show_em;
+ end;
+ /
+
+------showing all rows from employee----
+ set serveroutput on
+declare
+ cursor show_em is select id,gender,date_of_birth,e_name,d_name from employee;
+employee_data show_em%rowtype;
+begin
+open show_em;
+loop
+ fetch show_em into employee_data;
+exit when show_em%notfound;
+ dbms_output.put_line('id:'||employee_data.id||' '||'gender: '||employee_data.gender||' '||employee_data.date_of_birth||' '||employee_data.e_name||' '||employee_data.d_name);
+end loop;
+close show_em;
+ end;
+ /
+
+------- 
+SET SERVEROUTPUT ON
+declare
+date1 project.project_start%type;
+date2 project.project_start%type;
+show_date project.project_start%type;
+begin
+select project_start into date1 from Project where p_name='Construction';
+select project_start into date2 from Project where p_name='Management';
+select least(date1,date2) into show_date from dual;
+dbms_output.put_line(show_date||' is least.');
+end;
+/
+
+
+------update salary-----
+set serveroutput on
+declare
+old_p salary.amount%type;
+new_p salary.amount%type;
+emp_id salary.e_id%type;
+begin
+emp_id:=1807039;
+select amount into old_p from salary where e_id=emp_id;
+if old_p<100000 then
+new_p:=old_p+(old_p*.20);
+elsif old_p>=100000 and old_p<=200000 then
+new_p:=old_p+(old_p*.15);
+else
+new_p:=old_p+(old_p*.10);
+end if;
+dbms_output.put_line(emp_id||' '||'old_salary '||old_p||' '||'new_p '||new_p);
+exception
+when others then
+dbms_output.put_line(SQLERRM);
+end;
+/
+--------
+
+
+
+
+---find the salary of 1807039---
+SET SERVEROUTPUT ON
+
+create or replace function get_info return varchar is
+set_id  salary.e_id%type:=1807039;
+get_amount salary.amount%type;
+BEGIN
+select amount into get_amount from salary where e_id=set_id;
+return get_amount;
+END;
+/
+begin
+dbms_output.put_line('Salary '||get_info);
+end;
+/
+-------find the department code-----
+SET SERVEROUTPUT ON
+create or replace procedure get_code is
+set_name department.d_name%type:='Engineering';
+get_code department.d_no%type;
+get_company department.c_id%type;
+begin
+select d_no,c_id into get_code,get_company from department 
+where d_name=set_name;
+dbms_output.put_line('Department code is:'||get_code||' Company id is:'||get_company );
+end;
+/
+ begin
+get_code;
+end;
+/
